@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>کارگزاری مفید</title>
+    <!-- لینک فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.0.0/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- لینک آیکون‌ها (FontAwesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #f4f6f8;
+            --primary-dark: #1a2a6c;
+            --primary-light: #00b4db;
+            --text-dark: #333;
+            --text-gray: #888;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* شبیه‌سازی صفحه موبایل در دسکتاپ */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            position: relative;
+            padding-bottom: 80px; /* برای منوی پایین */
+        }
+
+        /* --- هدر --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 18px;
+        }
+
+        .user-info {
+            text-align: center;
+        }
+
+        .user-info h1 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .user-info p {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-top: 4px;
+        }
+
+        /* --- کارت اصلی (موجودی) --- */
+        .main-card {
+            background: linear-gradient(135deg, #1a2a6c 0%, #0072ff 100%);
+            border-radius: 24px;
+            padding: 20px;
+            margin: 0 16px;
+            color: var(--white);
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 114, 255, 0.2);
+            overflow: hidden;
+        }
+
+        /* بافت پس زمینه کارت */
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .btn-outline-white {
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: transparent;
+            color: var(--white);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .brand-logo {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .brand-logo i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .brand-logo span {
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .brand-logo small {
+            font-size: 9px;
+            opacity: 0.7;
+        }
+
+        .balance-section {
+            margin-top: 20px;
+        }
+        .balance-title {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .balance-amount {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .balance-currency {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .card-actions {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .card-icon-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- دکمه‌های عملیات (واریز/برداشت) --- */
+        .action-row {
+            display: flex;
+            gap: 16px;
+            margin: 16px;
+        }
+
+        .action-box {
+            flex: 1;
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .action-box:active {
+            transform: scale(0.97);
+        }
+
+        .action-box i {
+            color: #00a693;
+            font-size: 20px;
+        }
+
+        .action-box span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* --- بنر جت کارت --- */
+        .promo-banner {
+            background-color: #222;
+            border-radius: 16px;
+            margin: 0 16px 16px;
+            padding: 16px;
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-content h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .promo-content p {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        .promo-btn {
+            background-color: #004d40;
+            color: var(--white);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .promo-img {
+            font-size: 60px;
+            color: #444;
+            transform: rotate(-15deg);
+        }
+
+        /* نقطه‌های اسلایدر */
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+
+        .dot.active {
+            width: 20px;
+            border-radius: 4px;
+            background-color: #a0c4ff;
+        }
+
+        /* --- لیست آیتم‌ها --- */
+        .list-container {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .list-item {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .list-item i.main-icon {
+            color: #00a693;
+            font-size: 24px;
+            margin-left: 16px;
+        }
+
+        .list-text {
+            flex: 1;
+        }
+
+        .list-text h3 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .list-text p {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .list-item .arrow {
+            color: #ccc;
+            font-size: 16px;
+        }
+
+        /* --- منوی پایین --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            background-color: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 10;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item.active {
+            color: #004d40;
+            font-weight: 700;
+        }
+        
+        .nav-item.active i {
+            color: #004d40;
+        }
+
+        /* utilities */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- هدر بالا -->
+        <header>
+            <div class="icon-btn">
+                <i class="fa-solid fa-question"></i>
+            </div>
+            <div class="user-info">
+                <h1>احسان ضرغامی</h1>
+                <p>سود موثر سالانه: ۲۳۶.۱۶٪</p>
+            </div>
+            <div class="icon-btn">
+                <i class="fa-regular fa-user"></i>
+            </div>
+        </header>
+
+        <main>
+            <!-- کارت موجودی -->
+            <div class="main-card">
+                <div class="card-top">
+                    <button class="btn-outline-white">گردش حساب <i class="fa-solid fa-chevron-left" style="font-size: 10px; margin-right: 4px;"></i></button>
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>کارگزاری مفید</span>
+                        <small>پشرفت مداوم</small>
+                    </div>
+                </div>
+                
+                <div class="balance-section">
+                    <div class="balance-title">
+                        <i class="fa-solid fa-circle-info"></i> موجودی پس‌انداز
+                    </div>
+                    <div class="balance-amount" id="balanceText">
+                        ۹,۷۴۵,۹۳۸,۴۹۸ <span class="balance-currency">ریال</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="card-icon-btn" onclick="toggleBalance()">
+                        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+                    </button>
+                    <button class="card-icon-btn">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- دکمه‌های واریز و برداشت -->
+            <div class="action-row">
+                <div class="action-box">
+                    <i class="fa-solid fa-arrow-down"></i>
+                    <span>واریز وجه</span>
+                </div>
+                <div class="action-box">
+                    <i class="fa-solid fa-arrow-up"></i>
+                    <span>برداشت وجه</span>
+                </div>
+            </div>
+
+            <!-- بنر جت کارت -->
+            <div class="promo-banner">
+                <div class="promo-content">
+                    <h2>جت کارت</h2>
+                    <p>اتصال مستقیم به حساب پس‌انداز</p>
+                    <button class="promo-btn">اطلاعات بیشتر <i class="fa-solid fa-chevron-left" style="font-size: 10px; margin-right: 4px;"></i></button>
+                    </div>
+                <!-- تصویر شبیه سازی شده کارت -->
+                <i class="fa-regular fa-credit-card promo-img"></i>
+            </div>
+            
+            <!-- نقطه‌های اسلایدر -->
+            <div class="slider-dots">
+                <div class="dot"></div>
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <!-- لیست آیتم‌ها -->
+            <div class="list-container">
+                <div class="list-item">
+                    <i class="fa-solid fa-cart-shopping main-icon"></i>
+                    <div class="list-text">
+                        <h3>جت‌پی جدید</h3>
+                        <p>خرید از فروشگاه‌های مجاز با حساب پس‌انداز</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-left arrow"></i>
+                </div>
+
+                <div class="list-item">
+                    <i class="fa-solid fa-laptop-code main-icon"></i>
+                    <div class="list-text">
+                        <h3>مشاوره سرمایه‌گذاری</h3>
+                        <p>دریافت مشاوره تخصصی از کارشناسان خبره</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-left arrow"></i>
+                </div>
+
+                <div class="list-item">
+                    <i class="fa-regular fa-calendar-plus main-icon"></i>
+                    <div class="list-text">
+                        <h3>سرمایه‌گذاری مستمر</h3>
+                        <p>امکان ایجاد زمانبندی برای پس‌اندازهای شما</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-left arrow"></i>
+                </div>
+            </div>
+        </main>
+
+        <!-- منوی پایین -->
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>خانه</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-regular fa-credit-card"></i>
+                <span>کارت</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-chart-bar"></i>
+                <span>صندوق‌های مفید</span>
+            </div>
+            <div class="nav-item">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>مدیریت مالی</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- اسکریپت برای مخفی/نمایان کردن موجودی -->
+    <script>
+        let isBalanceVisible = true;
+        const actualBalance = "۵۰,۰۰۰,۰۰۰ <span class='balance-currency'>ریال</span>";
+        const hiddenBalance = "*** <span class='balance-currency'>ریال</span>";
+
+        function toggleBalance() {
+            const balanceEl = document.getElementById('balanceText');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            isBalanceVisible = !isBalanceVisible;
+            
+            if (isBalanceVisible) {
+                balanceEl.innerHTML = actualBalance;
+                eyeIcon.className = "fa-regular fa-eye";
+            } else {
+                balanceEl.innerHTML = hiddenBalance;
+                eyeIcon.className = "fa-regular fa-eye-slash";
+            }
+        }
+    </script>
+</body>
+</html>
